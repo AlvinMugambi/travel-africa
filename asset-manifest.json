@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/travel-africa/static/css/main.875b1b76.css",
+    "main.js": "/travel-africa/static/js/main.84cddcf4.js",
+    "static/js/787.8a220983.chunk.js": "/travel-africa/static/js/787.8a220983.chunk.js",
+    "static/media/bg3.jpg": "/travel-africa/static/media/bg3.79a6c841e8ed1868cc1d.jpg",
+    "static/media/collab.jpg": "/travel-africa/static/media/collab.7f7c88cc0822b7e64dad.jpg",
+    "static/media/SA.jpg": "/travel-africa/static/media/SA.7799ae55d563b71c28c3.jpg",
+    "static/media/map.jpg": "/travel-africa/static/media/map.6b829d15ef56fae70748.jpg",
+    "static/media/preview-mockup.png": "/travel-africa/static/media/preview-mockup.b02fb96c4db352f133e7.png",
+    "static/media/blog-5.jpg": "/travel-africa/static/media/blog-5.e01da7cbbc9b3854239f.jpg",
+    "static/media/blog-9.jpg": "/travel-africa/static/media/blog-9.98ba303b634acd56e605.jpg",
+    "static/media/blog-7.jpg": "/travel-africa/static/media/blog-7.0fb348098a9e9b46b38b.jpg",
+    "static/media/download-bg.jpg": "/travel-africa/static/media/download-bg.0fb348098a9e9b46b38b.jpg",
+    "static/media/download.jpg": "/travel-africa/static/media/download.64231325ddeb800f79a7.jpg",
+    "static/media/welcome-bg.jpg": "/travel-africa/static/media/welcome-bg.a268435bff407465ef7d.jpg",
+    "static/media/inner-bg.jpg": "/travel-africa/static/media/inner-bg.9ae60aeec5731cfdff92.jpg",
+    "static/media/accounts.jpg": "/travel-africa/static/media/accounts.cf84380c4bcacc256c44.jpg",
+    "static/media/blog-4.jpg": "/travel-africa/static/media/blog-4.0e0f62f02ba398f46438.jpg",
+    "static/media/success.jpg": "/travel-africa/static/media/success.673b77016a80c3e54269.jpg",
+    "static/media/map.png": "/travel-africa/static/media/map.f68a6bfde64e4c3af5cd.png",
+    "static/media/pattern-bg.png": "/travel-africa/static/media/pattern-bg.ec62a2e6e6f97f71238a.png",
+    "static/media/mobile-slider.png": "/travel-africa/static/media/mobile-slider.23829852f53a20e81dab.png",
+    "index.html": "/travel-africa/index.html",
+    "main.875b1b76.css.map": "/travel-africa/static/css/main.875b1b76.css.map",
+    "main.84cddcf4.js.map": "/travel-africa/static/js/main.84cddcf4.js.map",
+    "787.8a220983.chunk.js.map": "/travel-africa/static/js/787.8a220983.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.875b1b76.css",
+    "static/js/main.84cddcf4.js"
+  ]
+}
