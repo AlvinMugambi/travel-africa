@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import axios from 'axios'
+import ScrollAnimation from 'react-animate-on-scroll';
 import './assets/css/style.css';
+import "animate.css/animate.min.css";
 
 
 function App() {
@@ -119,9 +121,11 @@ function App() {
                 </div>
                 <div class="row align-items-center">
                     <div style={{marginBottom: 20}}>
+                    <ScrollAnimation animateIn="fadeIn">
                         <p className='text-center ptb_50 font20'>When it comes to travel in Africa, planning a weekend away or holiday with a group of friends requires a lot of time, preparation, accommodation of busy schedules as well as different budgets. There is so much information out there that planning a trip can leave us feeling overwhelmed.
-When it comes to to travel experiences and discover, what we really rely on is friends recommendations…right?
-We want to create a personal, fun & collaborative platform for users to create mapped out experiences in and around the city they live in, through geo-tagging, with recommendations and have their tribe be a part of the journey with them.</p>
+    When it comes to to travel experiences and discover, what we really rely on is friends recommendations…right?
+    We want to create a personal, fun & collaborative platform for users to create mapped out experiences in and around the city they live in, through geo-tagging, with recommendations and have their tribe be a part of the journey with them.</p>
+                    </ScrollAnimation>
                     </div>
                   {/* <div className='info-section reverse'>
                     <div className='info-img'>
@@ -140,9 +144,11 @@ We want to create a personal, fun & collaborative platform for users to create m
                       <p style={{paddingTop: 10}}>You can create your own trips/weekend aways, invite and collaborate with your friends to make the planning of it all less fragmented, time orientated, collaborative and fun.
 With travel planning and discovery of friends experiences being on one platform, you can travel to new places, with ease and comfort.</p>
                     </div>
-                    <div className='info-img'>
-                      <img src={require('./assets/img/bg/collab.jpg')} style={{width: 800, height: 400, borderRadius: 10}} />
-                    </div>
+                        <div className='info-img'>
+                    <ScrollAnimation animateIn='bounceInRight' animateOut='bounceOutLeft'>
+                        <img src={require('./assets/img/bg/collab.jpg')} style={{width: 800, height: 400, borderRadius: 10}} />
+                  </ScrollAnimation>
+                        </div>
                   </div>
                 </div>
                 <div class="row align-items-center">
@@ -314,7 +320,7 @@ With travel planning and discovery of friends experiences being on one platform,
                         </div>
                         <div class="col-12 col-sm-6 col-lg-3">
                             <div class="footer-items">
-                                <h3 class="footer-title mb-2">Download</h3>
+                                <h3 class="footer-title mb-2">Soon available on</h3>
                                 <div class="button-group store-buttons store-black d-flex flex-wrap">
                                     <a href="#">
                                         <img src={require("./assets/img/icon/google-play-black.png")} alt="" />
