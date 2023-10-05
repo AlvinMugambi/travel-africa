@@ -50,15 +50,14 @@ function App() {
     }).then(res => {
         setLoading(false)
         if (res.status === 201){
-            setMessage("Great! Copy link (button here) to pass this onto a friend and let’s get the momentum going!")
             setFormStep(1)
             setIsSuccessful(true)
-      } else {
-        setMessage("Oops! There was an issue capturing your details. Kindly try again later")
-      }
+        } else {
+            setMessage("Oops! There was an issue capturing your details. Kindly try again later")
+        }
     })
   }
-
+  
   return (
     <div className="App">
       <div id="scrollUp" title="Scroll To Top">
@@ -194,7 +193,7 @@ function App() {
                         {isSuccessful ? <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
                           <img src={require('./assets/img/bg/success.jpg')} width={400} /> 
                           <div class="section-heading text-center">
-                            <p class="d-block mt-2" style={{color: 'green', marginTop: '10px', marginLeft: '5px'}}>{message}</p>
+                            <div class="d-block mt-2" style={{color: 'green', marginTop: '10px', marginLeft: '5px'}}><div>Great! Copy link <button style={{fontWeight: 700, backgroundColor: 'white', borderWidth: 0}} onClick={() =>  navigator.clipboard.writeText('https://alvinmugambi.github.io/travel-africa/')}>https://alvinmugambi.github.io/travel-africa/</button> to pass this onto a friend and let’s get the momentum going!</div></div>
                           </div>
                         </div> : <div class="contact-box text-start">
                             <p class="d-block mt-2" style={{color: 'red', marginTop: '10px', marginBottom: '10px', marginLeft: '5px'}}>{message}</p>
@@ -210,7 +209,7 @@ function App() {
                                                 <input type="email" class="form-control" name="email" placeholder="Email" required="required" value={email} onChange={(e) => setEmail(e.target.value)} />
                                             </div>
                                             <label for="">
-                                                When we launch, to offer the best experience, we would love to study your activity and tailor-make your personal experiences on our app. To do this, we would need access to your data.* 
+                                                When we launch, to offer the best experience, we would love to study your activity and tailor-make your personal experiences on our app. To do this, we would need access to your data. 
                                             </label>
                                             {/* <div class="form-check" onClick={() => {
                                                 platforms.includes('instagram') ? setPlatforms(platforms.filter(age => age !== 'instagram')) : setPlatforms([...platforms, 'instagram']) 
