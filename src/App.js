@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import axios from 'axios'
-import ScrollAnimation from 'react-animate-on-scroll';
 import './assets/css/style.css';
 import "animate.css/animate.min.css";
 
@@ -12,6 +11,8 @@ function App() {
   const [restaurant1, setRestaurant1] = useState({name: '', reason: ''})
   const [restaurant2, setRestaurant2] = useState({name: '', reason: ''})
   const [restaurant3, setRestaurant3] = useState({name: '', reason: ''})
+  const [restaurant4, setRestaurant4] = useState({name: '', reason: ''})
+  const [restaurant5, setRestaurant5] = useState({name: '', reason: ''})
   const [platforms, setPlatforms] = useState([])
   const [message, setMessage] = useState('')
   const [comment, setComment] = useState('')
@@ -42,6 +43,8 @@ function App() {
       restaurant1,
       restaurant2,
       restaurant3,
+      restaurant4,
+      restaurant5,
       comment
     }).then(res => {
       setLoading(false)
@@ -94,11 +97,11 @@ function App() {
             </div>
         </header>
         <section id="home" class="section welcome-area bg-overlay overflow-hidden d-flex align-items-center">
-            <div class="container flex">
+            <div class="container flex justify-center">
                 <div class="row align-items-center justify-center">
-                    <div class="col-12 col-md-7">
+                    {/* <div class="col-12 col-md-7"> */}
                         <div class="welcome-intro intro-layout">
-                            <h1 class="text-white headerTxt animated-headerTxt">EXPLORE</h1>
+                            <h1 class="text-white headerTxt animated-headerTxt">EXPLORE AFRICA</h1>
                              <p class="text-white my-4 animated-headerTxt text text-center">Embark on your next african adventure with confidence</p>
                              <div className='explore-btn ripple-btn btn-animated'>
                              <a href="#features" style={{textDecoration: 'none', color: 'white'}}>
@@ -106,7 +109,7 @@ function App() {
                              </a>
                              </div>
                         </div>
-                    </div>
+                    {/* </div> */}
                 </div>
             </div>
         </section>
@@ -121,11 +124,8 @@ function App() {
                 </div>
                 <div class="row align-items-center">
                     <div style={{marginBottom: 20}}>
-                    <ScrollAnimation animateIn="fadeIn">
-                        <p className='text-center ptb_50 font20'>When it comes to travel in Africa, planning a weekend away or holiday with a group of friends requires a lot of time, preparation, accommodation of busy schedules as well as different budgets. There is so much information out there that planning a trip can leave us feeling overwhelmed.
-    When it comes to to travel experiences and discover, what we really rely on is friends recommendations…right?
-    We want to create a personal, fun & collaborative platform for users to create mapped out experiences in and around the city they live in, through geo-tagging, with recommendations and have their tribe be a part of the journey with them.</p>
-                    </ScrollAnimation>
+                        <p className='text-center ptb_50 font20'>When it comes to travel in Africa, planning a weekend away or holiday with a group of friends requires a lot of time, preparation, accommodation of busy schedules as well as different budgets. There is just so much information out there that planning a trip can leave us feeling overwhelmed. This is why friends recommendations help a lot, right?
+We want to create a personal, fun & collaborative platform for users to plan trips with friends, create recommended mapped out experiences, in and around the city they live in, through geo-tagging and have their people be a part of the journey with them.</p>
                     </div>
                   {/* <div className='info-section reverse'>
                     <div className='info-img'>
@@ -141,24 +141,21 @@ function App() {
                   <div className='info-section'>
                     <div className='info-txt'>
                       <h3>Collaboratively Plan</h3>
-                      <p style={{paddingTop: 10}}>You can create your own trips/weekend aways, invite and collaborate with your friends to make the planning of it all less fragmented, time orientated, collaborative and fun.
-With travel planning and discovery of friends experiences being on one platform, you can travel to new places, with ease and comfort.</p>
+                      <p style={{paddingTop: 10}}>You can create your own trips or weekend aways, invite and collaborate with your friends to make the planning of it all less fragmented, time orientated, collaborative and fun. With travel planning and discovery of friends experiences being on one platform, you can travel to new places…with ease and comfort.</p>
                     </div>
-                        <div className='info-img'>
-                    <ScrollAnimation animateIn='bounceInRight' animateOut='bounceOutLeft'>
-                        <img src={require('./assets/img/bg/collab.jpg')} style={{width: 800, height: 400, borderRadius: 10}} />
-                  </ScrollAnimation>
-                        </div>
+                    <div className='info-img'>
+                        <img src={require('./assets/img/bg/collab.jpg')} className='img' style={{width: 800, height: 400, borderRadius: 10}} />
+                    </div>
                   </div>
                 </div>
                 <div class="row align-items-center">
                   <div className='info-section reverse'>
                     <div className='info-img'>
-                      <img src={require('./assets/img/bg/map.jpg')} style={{width: 550, height: 400, borderRadius: 10}} />
+                      <img src={require('./assets/img/bg/map.jpg')} className='img' style={{width: 550, height: 400, borderRadius: 10}} />
                     </div>
                     <div className='info-txt'>
                       <h3>Interactive maps & Navigation</h3>
-                      <p style={{paddingTop: 10}}>Say goodbye to taking a recommendation and having to open Google Maps to find out how far it is in relation to where you are. With geo-mapping of your favourite	places as well as those of friends- you can discover new places with ease and convenience.</p>
+                      <p style={{paddingTop: 10}}>Say goodbye to getting a recommendation and having to open Google Maps to find out how far it is in relation to where you are. With geo-mapping of your favourite places as well as those of friends- you can discover new places with ease and convenience.</p>
                     </div>
                   </div>
                 </div>
@@ -166,10 +163,10 @@ With travel planning and discovery of friends experiences being on one platform,
                   <div className='info-section'>
                     <div className='info-txt'>
                       <h3>Personalized Recommendation</h3>
-                      <p style={{paddingTop: 10}}>It simplifies the trip planning process by offering personalized recommentations based on your preferences, budget, and activities. It suggests popular destinations, exciting activities and local guides tailored to your interests</p>
+                      <p style={{paddingTop: 10}}>We will simplify your trip planning process by offering personalised recommendations based on your preferences, budget, and activities. We will suggest popular destinations, exciting activities and local guides tailored to your interests.</p>
                     </div>
                     <div className='info-img'>
-                      <img src={require('./assets/img/bg/SA.jpg')} style={{width: 800, height: 400, borderRadius: 10}} />
+                      <img src={require('./assets/img/bg/SA.jpg')} className='img' style={{width: 800, height: 400, borderRadius: 10}} />
                     </div>
                   </div>
                 </div>
@@ -254,25 +251,33 @@ With travel planning and discovery of friends experiences being on one platform,
                                             <h4 style={{fontWeight: 600}}>Now for the fun part! </h4>
                                         </div>
                                         <label for="">
-                                        We would love for you to list your top 3-5 all time favourite restaurants, in the city you live in, and why you highly recommend them. In return, based on your listings, you will get an entire list of restaurants to keep in handy. The best part about this is that it will be recommendations from your friends and friends of friends- so you know you in good hands! <span style={{fontWeight: 600}}>How cool is that?!?</span></label>
+                                        We would love for you to list your top <span style={{fontWeight: 600}}>3-5</span> all time favourite restaurants, in the city you live in, and why you highly recommend them. In return, based on your listings and preference, we will email you an entire list of restaurants from people with similar interests to keep in handy. The best part about this is that it will be recommendations from your friends and friends of friends- so you know you are in good hands! <span style={{fontWeight: 600}}>How cool is that?!?</span></label>
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="city" placeholder="Which city do you live in? e.g. Cape Town" required="required" onChange={(e) => setCity(e.target.value)} />
                                         </div>
                                         <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
-                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant1" placeholder="Restaurant/Bar" required="required" onChange={(e) => setRestaurant1({...restaurant1, name: e.target.value})} />
-                                            <input style={{width: '70%'}} type="text" class="form-control" name="restaurant1" placeholder="Why do you like it? 😄" required="required" onChange={(e) => setRestaurant1({...restaurant1, reason: e.target.value})} />
+                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant1" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant1({...restaurant1, name: e.target.value})} />
+                                            <input style={{width: '70%'}} type="text" class="form-control" name="restaurant1" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant1({...restaurant1, reason: e.target.value})} />
                                         </div>
                                         <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
-                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant2" placeholder="Restaurant/Bar" required="required" onChange={(e) => setRestaurant2({...restaurant2, name: e.target.value})} />
+                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant2" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant2({...restaurant2, name: e.target.value})} />
                                             <input style={{width: '70%'}} type="text" class="form-control" name="restaurant2" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant2({...restaurant2, reason: e.target.value})} />
                                         </div>
                                         <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
-                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant3" placeholder="Restaurant/Bar" required="required" onChange={(e) => setRestaurant3({...restaurant3, name: e.target.value})} />
+                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant3" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant3({...restaurant3, name: e.target.value})} />
                                             <input style={{width: '70%'}} type="text" class="form-control" name="restaurant3" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant3({...restaurant3, reason: e.target.value})} />
                                         </div>
-                                        <div class="form-group" style={{marginTop: 50}}>
-                                            <input style={{height: '100px'}} type="text" class="form-control" name="comment" placeholder="Any feedback, comments or suggestions?" onChange={(e) => setComment(e.target.value)} />
+                                        <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
+                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant4" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant4({...restaurant4, name: e.target.value})} />
+                                            <input style={{width: '70%'}} type="text" class="form-control" name="restaurant4" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant4({...restaurant4, reason: e.target.value})} />
                                         </div>
+                                        <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
+                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant5" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant5({...restaurant5, name: e.target.value})} />
+                                            <input style={{width: '70%'}} type="text" class="form-control" name="restaurant5" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant5({...restaurant5, reason: e.target.value})} />
+                                        </div>
+                                        {/* <div class="form-group" style={{marginTop: 50}}>
+                                            <input style={{height: '100px'}} type="text" class="form-control" name="comment" placeholder="Any feedback, comments or suggestions?" onChange={(e) => setComment(e.target.value)} />
+                                        </div> */}
                                     </div>
                                     <div class="col-12">
                                         <button disabled={!name || !email || !platforms.length || !restaurant1.name || !restaurant2.name} onClick={submit} type="submit" class="btn btn-lg btn-block mt-3"><span class="text-white pr-3"><i class="fas fa-paper-plane"></i></span>{loading ? 'Sending info...' : "Let's explore!"}</button>
