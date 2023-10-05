@@ -178,8 +178,8 @@ function App() {
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-10 col-lg-8">
                         <div class="section-heading text-center">
-                            <h2 class="text-capitalize">{formStep === 1 ? isSuccessful ? 'Awesome!' : 'Let have a bit of fun!' : 'One last thing!'}</h2>
-                            {formStep === 2 &&  <p class="d-block mt-4">Please leave your name and email for us to keep in touch (we PROMISE no spam- only an update if we launch and you will be the first to know, we promise)</p>}
+                            <h2 class="text-capitalize">{formStep === 1 ? isSuccessful ? 'Awesome!' : "Let's have a bit of fun!" : 'One last thing!'}</h2>
+                            {formStep === 2 &&  <p class="d-block mt-4">Please leave your name and email for us to keep in touch (we PROMISE no spam- only an update if we launch and you will be the first to know)</p>}
                             {isSuccessful ? <p class="d-block mt-4">We will keep in touch! Expect a recommendation list from us soon</p> :
                             <>
                                 {/* <p class="d-block mt-4">Do you relate to the struggle when it comes to travel in Africa? If so, you may then be interested to know when the solution becomes available.</p>
