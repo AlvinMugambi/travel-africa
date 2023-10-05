@@ -250,7 +250,7 @@ function App() {
                                             <h4 style={{fontWeight: 600}}>Now for the fun part! </h4>
                                         </div>
                                         <label for="">
-                                        We would love for you to list your top <span style={{fontWeight: 600}}>3-5</span> all time favourite restaurants, in the city you live in, and why you highly recommend them. In return, based on your listings and preference, we will email you an entire list of restaurants, from people who have similar interests as you, to keep in handy. The best part about this is that it will be recommendations from your friends and friends of friends- so you know you are in good hands! <span style={{fontWeight: 600}}>How cool is that?!?</span></label>
+                                        We would love for you to list your <span style={{fontWeight: 600}}>top 3</span> all time favourite restaurants, in the city you live in, and why you highly recommend them. In return, based on your listings and preference, we will email you an entire list of restaurants (from people who have similar interests as you) to keep on hand the next time you want to eat out. The best part about this is that it will be recommendations from your friends and friends of friends- so you know you are in good hands! <span style={{fontWeight: 600}}>How cool is that?!?</span></label>
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="city" placeholder="Which city do you live in? e.g. Cape Town" required="required" onChange={(e) => setCity(e.target.value)} />
                                         </div>
@@ -266,14 +266,14 @@ function App() {
                                             <input style={{width: '25%'}} type="text" class="form-control" name="restaurant3" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant3({...restaurant3, name: e.target.value})} />
                                             <input style={{width: '70%'}} type="text" class="form-control" name="restaurant3" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant3({...restaurant3, reason: e.target.value})} />
                                         </div>
-                                        <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
+                                        {/* <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
                                             <input style={{width: '25%'}} type="text" class="form-control" name="restaurant4" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant4({...restaurant4, name: e.target.value})} />
                                             <input style={{width: '70%'}} type="text" class="form-control" name="restaurant4" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant4({...restaurant4, reason: e.target.value})} />
                                         </div>
                                         <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
                                             <input style={{width: '25%'}} type="text" class="form-control" name="restaurant5" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant5({...restaurant5, name: e.target.value})} />
                                             <input style={{width: '70%'}} type="text" class="form-control" name="restaurant5" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant5({...restaurant5, reason: e.target.value})} />
-                                        </div>
+                                        </div> */}
                                         {/* <div class="form-group" style={{marginTop: 50}}>
                                             <input style={{height: '100px'}} type="text" class="form-control" name="comment" placeholder="Any feedback, comments or suggestions?" onChange={(e) => setComment(e.target.value)} />
                                         </div> */}

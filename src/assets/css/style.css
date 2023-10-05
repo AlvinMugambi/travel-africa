@@ -830,14 +830,14 @@ img {
     width: 80vw;
   }
   .img {
-    height: 300px !important;
+    height: 250px !important;
   }
 }
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   .img {
     height: 300px;
   }
-}
+} */
 
 @media (max-width: 767px){
   .reverse {
