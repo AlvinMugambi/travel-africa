@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/travel-africa/static/css/main.fce5c84a.css",
-    "main.js": "/travel-africa/static/js/main.2a584f69.js",
+    "main.js": "/travel-africa/static/js/main.fa22f2bf.js",
     "static/js/787.8a220983.chunk.js": "/travel-africa/static/js/787.8a220983.chunk.js",
     "static/media/bg3.jpg": "/travel-africa/static/media/bg3.79a6c841e8ed1868cc1d.jpg",
     "static/media/collab.jpg": "/travel-africa/static/media/collab.7f7c88cc0822b7e64dad.jpg",
@@ -23,11 +23,11 @@
     "static/media/mobile-slider.png": "/travel-africa/static/media/mobile-slider.23829852f53a20e81dab.png",
     "index.html": "/travel-africa/index.html",
     "main.fce5c84a.css.map": "/travel-africa/static/css/main.fce5c84a.css.map",
-    "main.2a584f69.js.map": "/travel-africa/static/js/main.2a584f69.js.map",
+    "main.fa22f2bf.js.map": "/travel-africa/static/js/main.fa22f2bf.js.map",
     "787.8a220983.chunk.js.map": "/travel-africa/static/js/787.8a220983.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fce5c84a.css",
-    "static/js/main.2a584f69.js"
+    "static/js/main.fa22f2bf.js"
   ]
 }
