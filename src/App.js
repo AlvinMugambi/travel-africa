@@ -13,6 +13,7 @@ function App() {
   const [restaurant3, setRestaurant3] = useState({name: '', reason: ''})
   const [restaurant4, setRestaurant4] = useState({name: '', reason: ''})
   const [restaurant5, setRestaurant5] = useState({name: '', reason: ''})
+  const [formStep, setFormStep] = useState(1)
   const [platforms, setPlatforms] = useState([])
   const [message, setMessage] = useState('')
   const [comment, setComment] = useState('')
@@ -31,7 +32,7 @@ function App() {
     e.preventDefault()
     setMessage('')
     if (!validateEmail(email)) {
-        setMessage('You entered an invalid email')
+        setMessage('Oops! You entered an invalid email. Kindly check and try again')
         return
     }
     setLoading(true)
@@ -47,10 +48,11 @@ function App() {
       restaurant5,
       comment
     }).then(res => {
-      setLoading(false)
-      if (res.status === 201){
-        setMessage("Great! Copy link (button here) to pass this onto a friend and let’s get the momentum going!")
-        setIsSuccessful(true)
+        setLoading(false)
+        if (res.status === 201){
+            setMessage("Great! Copy link (button here) to pass this onto a friend and let’s get the momentum going!")
+            setFormStep(1)
+            setIsSuccessful(true)
       } else {
         setMessage("Oops! There was an issue capturing your details. Kindly try again later")
       }
@@ -124,7 +126,7 @@ function App() {
                 </div>
                 <div class="row align-items-center">
                     <div style={{marginBottom: 20}}>
-                        <p className='text-center ptb_50 font20'>When it comes to travel in Africa, planning a weekend away or holiday with a group of friends requires a lot of time, preparation, accommodation of busy schedules as well as different budgets. There is just so much information out there that planning a trip can leave us feeling overwhelmed. This is why friends recommendations help a lot, right? We want to create a personal, fun & collaborative platform for users to plan trips with friends, create recommended mapped out experiences, in and around the city they live in, and have their people be a part of the journey with them.</p>
+                        <p className='text-center ptb_50 font20'>We want to create a personal, fun & collaborative platform for users to plan trips with friends, create recommended mapped out experiences, in and around the city they live in, and have their people be a part of the journey with them.</p>
                     </div>
                   {/* <div className='info-section reverse'>
                     <div className='info-img'>
@@ -140,21 +142,21 @@ function App() {
                   <div className='info-section'>
                     <div className='info-txt'>
                       <h3>Collaboratively Plan</h3>
-                      <p style={{paddingTop: 10}}>You can create your own trips or weekend aways, invite and collaborate with your friends to make the planning of it all less fragmented, time orientated, collaborative and fun. With travel planning and discovery of friends experiences being on one platform, you can travel to new places…with ease and comfort.</p>
+                      <p style={{paddingTop: 10}}>You can create your own trips or weekend aways, invite and collaborate with your friends to make the planning of it all less fragmented, time orientated, collaborative and fun.</p>
                     </div>
                     <div className='info-img'>
-                        <img src={require('./assets/img/bg/collab.jpg')} className='img' style={{width: 800, height: 400, borderRadius: 10}} />
+                        <img src={require('./assets/img/bg/collab.jpg')} className='img' style={{width: 500, height: 350, borderRadius: 10}} />
                     </div>
                   </div>
                 </div>
                 <div class="row align-items-center">
                   <div className='info-section reverse'>
                     <div className='info-img'>
-                      <img src={require('./assets/img/bg/map.jpg')} className='img' style={{width: 550, height: 400, borderRadius: 10}} />
+                      <img src={require('./assets/img/bg/map.jpg')} className='img' style={{width: 500, height: 350, borderRadius: 10}} />
                     </div>
                     <div className='info-txt'>
                       <h3>Interactive maps</h3>
-                      <p style={{paddingTop: 10}}>Say goodbye to getting a recommendation and having to open Google Maps to find out how far it is in relation to where you are. With geo-tagging and mapping out your favourite restaurants, activities and adventures (as well as those of friends)- you can discover new places with ease and convenience.</p>
+                      <p style={{paddingTop: 10}}>With geo-tagging and mapping out your favourite restaurants, activities and adventures (as well as those of friends)- you can discover new places with ease and convenience.</p>
                     </div>
                   </div>
                 </div>
@@ -162,128 +164,146 @@ function App() {
                   <div className='info-section'>
                     <div className='info-txt'>
                       <h3>Personalized Recommendation</h3>
-                      <p style={{paddingTop: 10}}>We will simplify your trip planning process by offering personalised recommendations based on your preferences, budget, and activities. We will suggest popular destinations, exciting activities and local guides tailored to your interests.</p>
+                      <p style={{paddingTop: 10}}>Based on your preferences, budget, and friend's activities, we will suggest popular destinations, exciting activities and local guides tailored to your interests.</p>
                     </div>
                     <div className='info-img'>
-                      <img src={require('./assets/img/bg/SA.jpg')} className='img' style={{width: 800, height: 400, borderRadius: 10}} />
+                      <img src={require('./assets/img/bg/SA.jpg')} className='img' style={{width: 500, height: 350, borderRadius: 10}} />
                     </div>
                   </div>
                 </div>
             </div>
         </section>
         <section id="contact" class="contact-area bg-blue ptb_100 ph_20">
-            <div class="container" style={{marginTop: 20, marginBottom: 20}}>
+            <div class="container" style={{marginTop: 10, marginBottom: 20, padding: 10}}>
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-10 col-lg-8">
                         <div class="section-heading text-center">
-                            <h2 class="text-capitalize">Be among the first to experience!</h2>
-                            {isSuccessful ? <p class="d-block mt-4">We will keep in touch! Expect a recommendation list from us soon!</p> :
+                            <h2 class="text-capitalize">{formStep === 1 ? isSuccessful ? 'Awesome!' : 'Let have a bit of fun!' : 'One last thing!'}</h2>
+                            {formStep === 2 &&  <p class="d-block mt-4">Please leave your name and email for us to keep in touch (we PROMISE no spam- only an update if we launch and you will be the first to know, we promise)</p>}
+                            {isSuccessful ? <p class="d-block mt-4">We will keep in touch! Expect a recommendation list from us soon</p> :
                             <>
-                                <p class="d-block mt-4">Do you relate to the struggle when it comes to travel in Africa? If so, you may then be interested to know when the solution becomes available.</p>
-                                <p class="d-block mt-2">Please enter your email address here (we PROMISE no spam- only an update if we launch and you will be the first to know, we promise)</p>
+                                {/* <p class="d-block mt-4">Do you relate to the struggle when it comes to travel in Africa? If so, you may then be interested to know when the solution becomes available.</p>
+                                <p class="d-block mt-2">Please enter your email address here (we PROMISE no spam- only an update if we launch and you will be the first to know, we promise)</p> */}
                             </>
                             }
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-12 col-md-6 pt-4 pt-md-0">
+                    <div class="col-md-6 pt-4 pt-md-0" style={{paddingRight: 0, paddingLeft: 0}}>
                         {isSuccessful ? <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
                           <img src={require('./assets/img/bg/success.jpg')} width={400} /> 
                           <div class="section-heading text-center">
                             <p class="d-block mt-2" style={{color: 'green', marginTop: '10px', marginLeft: '5px'}}>{message}</p>
                           </div>
                         </div> : <div class="contact-box text-start">
+                            <p class="d-block mt-2" style={{color: 'red', marginTop: '10px', marginBottom: '10px', marginLeft: '5px'}}>{message}</p>
                             <form id="contact-form" method="POST" action="https://theme-land.com/sapp/demo/./assets/php/mail.php">
-                                <div class="row">
+                                <div class="row" >
                                     <div class="col-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="name" placeholder="Name" required="required" onChange={(e) => setName(e.target.value)} />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" name="email" placeholder="Email" required="required" onChange={(e) => setEmail(e.target.value)} />
-                                        </div>
-                                        <label for="">To offer the best experience, we would love to study your activity and tailor-make your personal experiences on our app. To do this, we would need access to your data.* 
-                                         Which of these platforms would you allow giving us access to? (You can select multiple)</label>
-                                        <div class="form-check" onClick={() => {
-                                            platforms.includes('instagram') ? setPlatforms(platforms.filter(age => age !== 'instagram')) : setPlatforms([...platforms, 'instagram']) 
-                                        }}>
-                                            <input class="form-check-input" type="radio" name="instagram" id="instagram" 
-                                              checked={platforms.includes('instagram')}
-                                            />
-                                            <label class="form-check-label" for="instagram">
-                                                Instagram
+                                        {formStep === 2 ? 
+                                        <>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="name" placeholder="Name" required="required" value={name} onChange={(e) => setName(e.target.value)} />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" name="email" placeholder="Email" required="required" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                            </div>
+                                            <label for="">
+                                                When we launch, to offer the best experience, we would love to study your activity and tailor-make your personal experiences on our app. To do this, we would need access to your data.* 
                                             </label>
-                                        </div>
-                                        <div class="form-check" onClick={() => {
-                                            platforms.includes('Google Maps') ? setPlatforms(platforms.filter(age => age !== 'Google Maps')) : setPlatforms([...platforms, 'Google Maps']) 
-                                        }}>
-                                            <input class="form-check-input" type="radio" name="Google Maps" id="Google Maps"
-                                              checked={platforms.includes('Google Maps')}
-                                            />
-                                            <label class="form-check-label" for="Google Maps">
-                                                Google Maps
-                                            </label>
-                                        </div>
-                                        <div class="form-check" onClick={() => {
-                                            platforms.includes('Phone gallery') ? setPlatforms(platforms.filter(age => age !== 'Phone gallery')) : setPlatforms([...platforms, 'Phone gallery']) 
-                                        }}>
-                                            <input class="form-check-input" type="radio" name="Phone gallery" id="phonegallery"
-                                              checked={platforms.includes('Phone gallery')}
-                                            />
-                                            <label class="form-check-label" for="Phone gallery">
-                                                Phone gallery
-                                            </label>
-                                        </div>
-                                        <div class="form-check" onClick={() => {
-                                            platforms.includes('I do not mind') ? setPlatforms(platforms.filter(age => age !== 'I do not mind')) : setPlatforms([...platforms, 'I do not mind']) 
-                                        }}>
-                                            <input class="form-check-input" type="radio" name="I do not mind" id="phonegallery"
-                                              checked={platforms.includes('I do not mind')}
-                                            />
-                                            <label class="form-check-label" for="I do not mind">
-                                                I do not mind
-                                            </label>
-                                        </div>
-                                        <label style={{fontSize: '13px', marginBottom: 20}}>*No information from your data will used for any other purpose other than for your user experience on the app.</label>
-                                        <div className='flex' style={{justifyContent: 'center', marginBottom: 10}}>
-                                            <h4 style={{fontWeight: 600}}>Now for the fun part! </h4>
-                                        </div>
-                                        <label for="">
-                                        We would love for you to list your <span style={{fontWeight: 600}}>top 3</span> all time favourite restaurants, in the city you live in, and why you highly recommend them. In return, based on your listings and preference, we will email you an entire list of restaurants (from people who have similar interests as you) to keep on hand the next time you want to eat out. The best part about this is that it will be recommendations from your friends and friends of friends- so you know you are in good hands! <span style={{fontWeight: 600}}>How cool is that?!?</span></label>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="city" placeholder="Which city do you live in? e.g. Cape Town" required="required" onChange={(e) => setCity(e.target.value)} />
-                                        </div>
-                                        <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
-                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant1" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant1({...restaurant1, name: e.target.value})} />
-                                            <input style={{width: '70%'}} type="text" class="form-control" name="restaurant1" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant1({...restaurant1, reason: e.target.value})} />
-                                        </div>
-                                        <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
-                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant2" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant2({...restaurant2, name: e.target.value})} />
-                                            <input style={{width: '70%'}} type="text" class="form-control" name="restaurant2" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant2({...restaurant2, reason: e.target.value})} />
-                                        </div>
-                                        <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
-                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant3" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant3({...restaurant3, name: e.target.value})} />
-                                            <input style={{width: '70%'}} type="text" class="form-control" name="restaurant3" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant3({...restaurant3, reason: e.target.value})} />
-                                        </div>
-                                        {/* <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
-                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant4" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant4({...restaurant4, name: e.target.value})} />
-                                            <input style={{width: '70%'}} type="text" class="form-control" name="restaurant4" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant4({...restaurant4, reason: e.target.value})} />
-                                        </div>
-                                        <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
-                                            <input style={{width: '25%'}} type="text" class="form-control" name="restaurant5" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant5({...restaurant5, name: e.target.value})} />
-                                            <input style={{width: '70%'}} type="text" class="form-control" name="restaurant5" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant5({...restaurant5, reason: e.target.value})} />
-                                        </div> */}
-                                        {/* <div class="form-group" style={{marginTop: 50}}>
-                                            <input style={{height: '100px'}} type="text" class="form-control" name="comment" placeholder="Any feedback, comments or suggestions?" onChange={(e) => setComment(e.target.value)} />
-                                        </div> */}
+                                            {/* <div class="form-check" onClick={() => {
+                                                platforms.includes('instagram') ? setPlatforms(platforms.filter(age => age !== 'instagram')) : setPlatforms([...platforms, 'instagram']) 
+                                            }}>
+                                                <input class="form-check-input" type="radio" name="instagram" id="instagram" 
+                                                checked={platforms.includes('instagram')}
+                                                />
+                                                <label class="form-check-label" for="instagram">
+                                                    Instagram
+                                                </label>
+                                            </div>
+                                            <div class="form-check" onClick={() => {
+                                                platforms.includes('Google Maps') ? setPlatforms(platforms.filter(age => age !== 'Google Maps')) : setPlatforms([...platforms, 'Google Maps']) 
+                                            }}>
+                                                <input class="form-check-input" type="radio" name="Google Maps" id="Google Maps"
+                                                checked={platforms.includes('Google Maps')}
+                                                />
+                                                <label class="form-check-label" for="Google Maps">
+                                                    Google Maps
+                                                </label>
+                                            </div>
+                                            <div class="form-check" onClick={() => {
+                                                platforms.includes('Phone gallery') ? setPlatforms(platforms.filter(age => age !== 'Phone gallery')) : setPlatforms([...platforms, 'Phone gallery']) 
+                                            }}>
+                                                <input class="form-check-input" type="radio" name="Phone gallery" id="phonegallery"
+                                                checked={platforms.includes('Phone gallery')}
+                                                />
+                                                <label class="form-check-label" for="Phone gallery">
+                                                    Phone gallery
+                                                </label>
+                                            </div> */}
+                                            <div class="form-check" onClick={() => {
+                                                platforms.includes('I do not mind') ? setPlatforms(platforms.filter(age => age !== 'I do not mind')) : setPlatforms([...platforms, 'I do not mind']) 
+                                            }}>
+                                                <input class="form-check-input" type="radio" name="I do not mind" id="phonegallery"
+                                                checked={platforms.includes('I do not mind')}
+                                                />
+                                                <label class="form-check-label" for="I do not mind">
+                                                    I do not mind
+                                                </label>
+                                            </div>
+                                            <label style={{fontSize: '13px', marginBottom: 20}}>*No information from your data will used for any other purpose other than for your user experience on the app.</label>
+                                        </>
+                                        : (
+                                            <>
+                                                {/* <div className='flex' style={{justifyContent: 'center', marginBottom: 10}}>
+                                                    <h4 style={{fontWeight: 600}}>Now for the fun part! </h4>
+                                                </div> */}
+                                                <label for="" style={{marginBottom: 10}}>
+                                                We would love for you to list your <span style={{fontWeight: 600}}>top 3</span> all time favourite restaurants, in the city you live in, and why you highly recommend them. In return, based on your listings and preference, we will email you an entire list of restaurants, from people who have similar interests as you! 
+                                                </label>
+                                                <label style={{marginBottom: 10}}>The best part about this is that it will be recommendations from your friends and friends of friends- so you know you are in good hands! <span style={{fontWeight: 600}}>How cool is that?!?</span></label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="city" placeholder="Which city do you live in? e.g. Cape Town" required="required" value={city} onChange={(e) => setCity(e.target.value)} />
+                                                </div>
+                                                <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
+                                                    <input style={{width: '25%'}} type="text" class="form-control" name="restaurant1" placeholder="Restaurant" required="required" value={restaurant1.name} onChange={(e) => setRestaurant1({...restaurant1, name: e.target.value})} />
+                                                    <input style={{width: '70%'}} type="text" class="form-control" name="restaurant1" placeholder="Why do you like it?" required="required" value={restaurant1.reason} onChange={(e) => setRestaurant1({...restaurant1, reason: e.target.value})} />
+                                                </div>
+                                                <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
+                                                    <input style={{width: '25%'}} type="text" class="form-control" name="restaurant2" placeholder="Restaurant" required="required" value={restaurant2.name} onChange={(e) => setRestaurant2({...restaurant2, name: e.target.value})} />
+                                                    <input style={{width: '70%'}} type="text" class="form-control" name="restaurant2" placeholder="Why do you like it?" required="required" value={restaurant2.reason} onChange={(e) => setRestaurant2({...restaurant2, reason: e.target.value})} />
+                                                </div>
+                                                <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
+                                                    <input style={{width: '25%'}} type="text" class="form-control" name="restaurant3" placeholder="Restaurant" required="required" value={restaurant3.name} onChange={(e) => setRestaurant3({...restaurant3, name: e.target.value})} />
+                                                    <input style={{width: '70%'}} type="text" class="form-control" name="restaurant3" placeholder="Why do you like it?" required="required" value={restaurant3.reason} onChange={(e) => setRestaurant3({...restaurant3, reason: e.target.value})} />
+                                                </div>
+                                                {/* <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
+                                                    <input style={{width: '25%'}} type="text" class="form-control" name="restaurant4" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant4({...restaurant4, name: e.target.value})} />
+                                                    <input style={{width: '70%'}} type="text" class="form-control" name="restaurant4" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant4({...restaurant4, reason: e.target.value})} />
+                                                </div>
+                                                <div class="form-group row align-items-center" style={{justifyContent: 'space-between'}}>
+                                                    <input style={{width: '25%'}} type="text" class="form-control" name="restaurant5" placeholder="Restaurant" required="required" onChange={(e) => setRestaurant5({...restaurant5, name: e.target.value})} />
+                                                    <input style={{width: '70%'}} type="text" class="form-control" name="restaurant5" placeholder="Why do you like it?" required="required" onChange={(e) => setRestaurant5({...restaurant5, reason: e.target.value})} />
+                                                </div> */}
+                                                {/* <div class="form-group" style={{marginTop: 50}}>
+                                                    <input style={{height: '100px'}} type="text" class="form-control" name="comment" placeholder="Any feedback, comments or suggestions?" onChange={(e) => setComment(e.target.value)} />
+                                                </div> */}
+                                            </>
+                                        )
+                                    }
                                     </div>
-                                    <div class="col-12">
-                                        <button disabled={!name || !email || !platforms.length || !restaurant1.name || !restaurant2.name} onClick={submit} type="submit" class="btn btn-lg btn-block mt-3"><span class="text-white pr-3"><i class="fas fa-paper-plane"></i></span>{loading ? 'Sending info...' : "Let's explore!"}</button>
+                                    <div class="col-12 flex row justify-space-between" style={{flexWrap: 'wrap'}}>
+                                        {formStep === 2 && <button style={{width: '20%'}} type="back" class="mt-3" onClick={(e) => {
+                                            e.preventDefault()
+                                            setFormStep(1)
+                                        }} >Back</button>}
+                                        <button style={{width: formStep === 2 ? '60%' : '100%'}} disabled={
+                                            (formStep === 1 && (!restaurant1.name || !restaurant2.name || !restaurant3.name || !city)) || 
+                                            (formStep === 2 && (!name || !email))} onClick={(e) => formStep === 1 ? setFormStep(2) : submit(e)} type="submit" class="btn btn-lg btn-block mt-3">{loading ? 'Sending info...' : formStep === 1 ? "Next" : "Let's explore!"}</button>
                                     </div>
                                 </div>
                             </form>
-                            <p class="d-block mt-2" style={{color: 'red', marginTop: '10px', marginLeft: '5px'}}>{message}</p>
                             {/* <p class="form-message"></p> */}
                         </div>}
                     </div>
