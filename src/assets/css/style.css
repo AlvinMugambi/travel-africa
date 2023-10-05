@@ -96,7 +96,7 @@
   --valid-color: #28a745;
   --invalid-color: #ffa200;
   --primary-bg-color: #f6f9fe;
-  --primary-bg-color-2: linear-gradient(-47deg, #84832f 0%, #2B3f1E 100%);
+  --primary-bg-color-2: linear-gradient(-47deg, #84832f 0%, #2B3f1E 50%);
   --primary-bg-color-3: #ffffff;
   --primary-bg-color-4: rgba(16, 16, 45, 1);
   --nav-bg-color: #d3d3d3;
@@ -2412,8 +2412,6 @@ img {
 .ripple-btn::after {
   content: "";
   display: inline-block;
-  height: 100%;
-  width: 100%;
   border-radius: 100px;
   position: absolute;
   top: 0;

@@ -102,7 +102,7 @@ function App() {
                     {/* <div class="col-12 col-md-7"> */}
                         <div class="welcome-intro intro-layout">
                             <h1 class="text-white headerTxt animated-headerTxt">EXPLORE AFRICA</h1>
-                             <p class="text-white my-4 animated-headerTxt text text-center">Embark on your next african adventure with confidence</p>
+                             <p class="text-white my-4 animated-headerTxt text text-center">Embark on your next African adventure with confidence</p>
                              <div className='explore-btn ripple-btn btn-animated'>
                              <a href="#features" style={{textDecoration: 'none', color: 'white'}}>
                               Explore now
@@ -124,8 +124,7 @@ function App() {
                 </div>
                 <div class="row align-items-center">
                     <div style={{marginBottom: 20}}>
-                        <p className='text-center ptb_50 font20'>When it comes to travel in Africa, planning a weekend away or holiday with a group of friends requires a lot of time, preparation, accommodation of busy schedules as well as different budgets. There is just so much information out there that planning a trip can leave us feeling overwhelmed. This is why friends recommendations help a lot, right?
-We want to create a personal, fun & collaborative platform for users to plan trips with friends, create recommended mapped out experiences, in and around the city they live in, through geo-tagging and have their people be a part of the journey with them.</p>
+                        <p className='text-center ptb_50 font20'>When it comes to travel in Africa, planning a weekend away or holiday with a group of friends requires a lot of time, preparation, accommodation of busy schedules as well as different budgets. There is just so much information out there that planning a trip can leave us feeling overwhelmed. This is why friends recommendations help a lot, right? We want to create a personal, fun & collaborative platform for users to plan trips with friends, create recommended mapped out experiences, in and around the city they live in, and have their people be a part of the journey with them.</p>
                     </div>
                   {/* <div className='info-section reverse'>
                     <div className='info-img'>
@@ -154,8 +153,8 @@ We want to create a personal, fun & collaborative platform for users to plan tri
                       <img src={require('./assets/img/bg/map.jpg')} className='img' style={{width: 550, height: 400, borderRadius: 10}} />
                     </div>
                     <div className='info-txt'>
-                      <h3>Interactive maps & Navigation</h3>
-                      <p style={{paddingTop: 10}}>Say goodbye to getting a recommendation and having to open Google Maps to find out how far it is in relation to where you are. With geo-mapping of your favourite places as well as those of friends- you can discover new places with ease and convenience.</p>
+                      <h3>Interactive maps</h3>
+                      <p style={{paddingTop: 10}}>Say goodbye to getting a recommendation and having to open Google Maps to find out how far it is in relation to where you are. With geo-tagging and mapping out your favourite restaurants, activities and adventures (as well as those of friends)- you can discover new places with ease and convenience.</p>
                     </div>
                   </div>
                 </div>
@@ -251,7 +250,7 @@ We want to create a personal, fun & collaborative platform for users to plan tri
                                             <h4 style={{fontWeight: 600}}>Now for the fun part! </h4>
                                         </div>
                                         <label for="">
-                                        We would love for you to list your top <span style={{fontWeight: 600}}>3-5</span> all time favourite restaurants, in the city you live in, and why you highly recommend them. In return, based on your listings and preference, we will email you an entire list of restaurants from people with similar interests to keep in handy. The best part about this is that it will be recommendations from your friends and friends of friends- so you know you are in good hands! <span style={{fontWeight: 600}}>How cool is that?!?</span></label>
+                                        We would love for you to list your top <span style={{fontWeight: 600}}>3-5</span> all time favourite restaurants, in the city you live in, and why you highly recommend them. In return, based on your listings and preference, we will email you an entire list of restaurants, from people who have similar interests as you, to keep in handy. The best part about this is that it will be recommendations from your friends and friends of friends- so you know you are in good hands! <span style={{fontWeight: 600}}>How cool is that?!?</span></label>
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="city" placeholder="Which city do you live in? e.g. Cape Town" required="required" onChange={(e) => setCity(e.target.value)} />
                                         </div>
