@@ -26,6 +26,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [keepsList, setKeepsList] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
 
   const validateEmail = (email) => {
     return String(email)
@@ -214,7 +215,7 @@ function App() {
               <div className="info-section reverse">
                 <div className="info-img">
                   <img
-                    src={require('./assets/img/bg/map.jpg')}
+                    src={require('./assets/img/bg/map-phone.jpg')}
                     className="img"
                     style={{ width: 500, height: 350, borderRadius: 10 }}
                   />
@@ -241,9 +242,9 @@ function App() {
                 </div>
                 <div className="info-img">
                   <img
-                    src={require('./assets/img/bg/SA.jpg')}
+                    src={require('./assets/img/bg/sa-coffee.jpg')}
                     className="img"
-                    style={{ width: 500, height: 350, borderRadius: 10 }}
+                    style={{ width: 500, height: 400, borderRadius: 10 }}
                   />
                 </div>
               </div>
@@ -326,23 +327,29 @@ function App() {
                           marginLeft: '5px',
                         }}
                       >
+                        {copiedLink && (
+                          <p style={{ color: 'green', marginBottom: 10 }}>
+                            Link copied!
+                          </p>
+                        )}
                         <div>
-                          Great! Copy link{' '}
+                          Great! Click this link to copy:{' '}
                           <button
                             style={{
                               fontWeight: 700,
                               backgroundColor: 'white',
                               borderWidth: 0,
                             }}
-                            onClick={() =>
+                            onClick={() => {
+                              setCopiedLink(true);
                               navigator.clipboard.writeText(
-                                'https://alvinmugambi.github.io/travel-africa/',
-                              )
-                            }
+                                'http://travel-tech-africa.com/',
+                              );
+                            }}
                           >
-                            https://alvinmugambi.github.io/travel-africa/
+                            http://travel-tech-africa.com/
                           </button>{' '}
-                          to pass this onto a friend and get the momentum going!
+                          and pass onto a friend and get the momentum going!
                         </div>
                       </div>
                     </div>
@@ -413,27 +420,6 @@ function App() {
                                   &nbsp;&nbsp;
                                 </p>
                               </div>
-                              {/* <div
-                                class="form-check"
-                                onClick={() => {
-                                  setDataRequest(true)
-                                }}
-                              >
-                                <input
-                                  class="form-check-input"
-                                  type="radio"
-                                  name="I do not mind"
-                                  id="dontmind"
-                                  checked={dataRequest}
-                                  onChange={() => setDataRequest(!dataRequest)}
-                                />
-                                <label
-                                  class="form-check-label"
-                                  for="I do not mind"
-                                >
-                                  I do not mind
-                                </label>
-                              </div> */}
                               <label
                                 style={{ fontSize: '13px', marginBottom: 20 }}
                               >
@@ -878,7 +864,10 @@ function App() {
                             </div>
                           ) : (
                             <>
-                              <p style={{ marginBottom: 20 }} className='bold600'>
+                              <p
+                                style={{ marginBottom: 20 }}
+                                className="bold600"
+                              >
                                 Nairobi and Cape Town travellers
                               </p>
                               <p style={{ marginBottom: 20 }}>
@@ -1056,10 +1045,7 @@ function App() {
                             style={{ width: formStep !== 1 ? '60%' : '100%' }}
                             disabled={
                               (formStep === 1 &&
-                                (!place1.name ||
-                                  !place2.name ||
-                                  !place3.name ||
-                                  !city)) ||
+                                (!place1.name || !place2.name || !city)) ||
                               (formStep === 2 && !favourite) ||
                               (formStep === 3 &&
                                 (!reasons.length ||
