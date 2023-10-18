@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import axios from 'axios';
 import Checkbox from 'rc-checkbox';
+import { getTravelorType } from './static';
 import 'rc-checkbox/assets/index.css';
 import './assets/css/style.css';
 import 'animate.css/animate.min.css';
@@ -10,9 +11,9 @@ function App() {
   const [city, setCity] = useState('');
   const [email, setEmail] = useState('');
   const [favourite, setFavourite] = useState('');
-  const [place1, setPlace1] = useState({ name: '', reason: '' });
-  const [place2, setPlace2] = useState({ name: '', reason: '' });
-  const [place3, setPlace3] = useState({ name: '', reason: '' });
+  const [place1, setPlace1] = useState({ name: '', location: '', reason: '' });
+  const [place2, setPlace2] = useState({ name: '', location: '', reason: '' });
+  const [place3, setPlace3] = useState({ name: '', location: '', reason: '' });
   const [restaurant1, setRestaurant1] = useState('');
   const [restaurant2, setRestaurant2] = useState('');
   const [formStep, setFormStep] = useState(1);
@@ -23,10 +24,20 @@ function App() {
   const [activity1, setActivity1] = useState([]);
   const [activity2, setActivity2] = useState([]);
   const [sharedList, setSharedList] = useState('');
+  const [nextTrip, setNextTrip] = useState('');
   const [loading, setLoading] = useState(false);
   const [keepsList, setKeepsList] = useState(false);
+  const [plannerType, setPlannerType] = useState('');
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+
+  const capitalizeFLetter = (str) => {
+    if (str) {
+      return str.replace(/^./, str[0].toUpperCase());
+    } else {
+      return '';
+    }
+  };
 
   const validateEmail = (email) => {
     return String(email)
@@ -48,28 +59,31 @@ function App() {
     setLoading(true);
     axios
       .post('https://nairobiservices.go.ke/api/authentication/auth/travel', {
+      // .post('http://127.0.0.1:8001/auth/travel', {
         name,
         email,
         dataRequest,
         city,
         place1,
         place2,
-        place3,
+        // place3,
         favourite,
         restaurant1,
-        restaurant2,
+        // restaurant2,
         activity1,
         activity2,
         keepsList,
         keptPlaces,
         sharedList,
         reasons,
+        plannerType,
+        nextTrip
       })
       .then((res) => {
         setLoading(false);
         if (res.status === 201) {
-          setFormStep(1);
-          setIsSuccessful(true);
+          setFormStep(5);
+          // setIsSuccessful(true);
         } else {
           setMessage(
             'Oops! There was an issue capturing your details. Kindly try again',
@@ -77,6 +91,8 @@ function App() {
         }
       });
   };
+
+
 
   return (
     <div className="App">
@@ -211,7 +227,7 @@ function App() {
                 </div>
               </div>
             </div>
-            <div class="row align-items-center">
+            {/* <div class="row align-items-center">
               <div className="info-section reverse">
                 <div className="info-img">
                   <img
@@ -229,8 +245,8 @@ function App() {
                   </p>
                 </div>
               </div>
-            </div>
-            <div class="row align-items-center">
+            </div> */}
+            {/* <div class="row align-items-center">
               <div className="info-section">
                 <div className="info-txt">
                   <h3>Personalized Recommendation</h3>
@@ -248,7 +264,7 @@ function App() {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
         <section id="contact" class="contact-area bg-blue ptb_100 ph_20">
@@ -268,7 +284,9 @@ function App() {
                       ? 'Now, pick your best'
                       : formStep === 3
                       ? 'Tell us a bit more'
-                      : 'One last thing!'}
+                      : formStep === 4 
+                      ? 'One last thing!'
+                      : 'We found your type!'}
                   </h2>
                   {formStep === 2 && (
                     <p class="d-block mt-4 bold600">
@@ -302,7 +320,7 @@ function App() {
             </div>
             <div class="row justify-content-center">
               <div
-                class="col-md-6 pt-4 pt-md-0"
+                class={formStep === 5 ? "col-md-12 pt-4 pt-md-0" : "col-md-6 pt-4 pt-md-0"}
                 style={{ paddingRight: 0, paddingLeft: 0 }}
               >
                 {isSuccessful ? (
@@ -374,7 +392,26 @@ function App() {
                     >
                       <div class="row">
                         <div class="col-12">
-                          {formStep === 4 ? (
+                          {formStep === 5 ? (
+                            <div>
+                              <h3 className='text-center' style={{marginBottom: 10}}>
+                                {capitalizeFLetter(name)}, We found the type of traveller you are
+                              </h3>
+                              <div>
+                                <div style={{display: 'flex', justifyContent: 'center', marginBottom: 10}}>
+                                  {reasons.length === 2 && <h5>You are a mix of</h5>}
+                                  {reasons.length === 3 && <h5>You are a diverse one</h5>}
+                                </div>
+                                <div className='flex travelortype'>
+                                  {getTravelorType(reasons)?.map((travelor, index) => (
+                                      <div className='travellerImg' style={{marginRight: index !== reasons.length - 1 ? '20px' : '0px'}} >
+                                        <img src={travelor.image}/>
+                                      </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          ) : formStep === 4 ? (
                             <>
                               <div class="form-group">
                                 <input
@@ -398,7 +435,7 @@ function App() {
                                   onChange={(e) => setEmail(e.target.value)}
                                 />
                               </div>
-                              <label for="">
+                              {/* <label for="">
                                 When we launch, to offer the best experience, we
                                 would love to study your activity and
                                 tailor-make your personal experiences on our
@@ -426,7 +463,7 @@ function App() {
                                 *No information from your data will used for any
                                 other purpose other than for your user
                                 experience on the app.
-                              </label>
+                              </label> */}
                             </>
                           ) : formStep === 3 ? (
                             <div>
@@ -479,14 +516,14 @@ function App() {
                                         type="text"
                                         class="form-control"
                                         name="Restaurant1"
-                                        placeholder="Restaurant 1"
+                                        placeholder="Restaurant name"
                                         value={restaurant1}
                                         onChange={(e) =>
                                           setRestaurant1(e.target.value)
                                         }
                                       />
                                     </div>
-                                    <div class="form-group">
+                                    {/* <div class="form-group">
                                       <input
                                         type="text"
                                         class="form-control"
@@ -497,7 +534,7 @@ function App() {
                                           setRestaurant2(e.target.value)
                                         }
                                       />
-                                    </div>
+                                    </div> */}
                                   </div>
                                 )}
                                 <div>
@@ -568,22 +605,22 @@ function App() {
                                       <Checkbox
                                         name={'peaceandquiet'}
                                         checked={reasons.includes(
-                                          'peaceandquiet',
+                                          'peace and quiet',
                                         )}
                                         onChange={() => {
                                           if (
-                                            reasons.includes('peaceandquiet')
+                                            reasons.includes('peace and quiet')
                                           ) {
                                             setReasons((prev) =>
                                               prev.filter(
                                                 (item) =>
-                                                  item !== 'peaceandquiet',
+                                                  item !== 'peace and quiet',
                                               ),
                                             );
                                           } else {
                                             setReasons((prev) => [
                                               ...prev,
-                                              'peaceandquiet',
+                                              'peace and quiet',
                                             ]);
                                           }
                                         }}
@@ -598,18 +635,18 @@ function App() {
                                     <label>
                                       <Checkbox
                                         name={'relaxed'}
-                                        checked={reasons.includes('relaxed')}
+                                        checked={reasons.includes('relaxed environment')}
                                         onChange={() => {
-                                          if (reasons.includes('relaxed')) {
+                                          if (reasons.includes('relaxed environment')) {
                                             setReasons((prev) =>
                                               prev.filter(
-                                                (item) => item !== 'relaxed',
+                                                (item) => item !== 'relaxed environment',
                                               ),
                                             );
                                           } else {
                                             setReasons((prev) => [
                                               ...prev,
-                                              'relaxed',
+                                              'relaxed environment',
                                             ]);
                                           }
                                         }}
@@ -672,6 +709,158 @@ function App() {
                                         }}
                                       />
                                       &nbsp; The night life
+                                    </label>
+                                    &nbsp;&nbsp;
+                                  </p>
+                                </div>
+                                <div>
+                                  <p>
+                                    <label>
+                                      <Checkbox
+                                        name={'closetothebeach'}
+                                        checked={reasons.includes('close to the beach')}
+                                        onChange={() => {
+                                          if (reasons.includes('close to the beach')) {
+                                            setReasons((prev) =>
+                                              prev.filter(
+                                                (item) => item !== 'close to the beach',
+                                              ),
+                                            );
+                                          } else {
+                                            setReasons((prev) => [
+                                              ...prev,
+                                              'close to the beach',
+                                            ]);
+                                          }
+                                        }}
+                                      />
+                                      &nbsp; Close to the beach
+                                    </label>
+                                    &nbsp;&nbsp;
+                                  </p>
+                                </div>
+                                <div>
+                                  <p>
+                                    <label>
+                                      <Checkbox
+                                        name={'innature'}
+                                        checked={reasons.includes('in nature')}
+                                        onChange={() => {
+                                          if (reasons.includes('in nature')) {
+                                            setReasons((prev) =>
+                                              prev.filter(
+                                                (item) => item !== 'in nature',
+                                              ),
+                                            );
+                                          } else {
+                                            setReasons((prev) => [
+                                              ...prev,
+                                              'in nature',
+                                            ]);
+                                          }
+                                        }}
+                                      />
+                                      &nbsp; In nature
+                                    </label>
+                                    &nbsp;&nbsp;
+                                  </p>
+                                </div>
+                              </div>
+                              <p className="question">
+                                When is your next trip with a group of friends?
+                              </p>
+                              <div>
+                                <div>
+                                  <p>
+                                    <label>
+                                      <Checkbox
+                                        name={'nextweek'}
+                                        checked={nextTrip === 'next week'}
+                                        onChange={() => {
+                                          setNextTrip('next week')
+                                        }}
+                                      />
+                                      &nbsp; Next week
+                                    </label>
+                                    &nbsp;&nbsp;
+                                  </p>
+                                </div>
+                                <div>
+                                  <p>
+                                    <label>
+                                      <Checkbox
+                                        name={'nextmonth'}
+                                        checked={nextTrip === 'next month'}
+                                        onChange={() => {
+                                          setNextTrip('next month')
+                                        }}
+                                      />
+                                      &nbsp; Next month
+                                    </label>
+                                    &nbsp;&nbsp;
+                                  </p>
+                                </div>
+                                <div>
+                                  <p>
+                                    <label>
+                                      <Checkbox
+                                        name={'nextyear'}
+                                        checked={nextTrip === 'next year'}
+                                        onChange={() => {
+                                          setNextTrip('next year')
+                                        }}
+                                      />
+                                      &nbsp; Next year
+                                    </label>
+                                    &nbsp;&nbsp;
+                                  </p>
+                                </div>
+                                <div>
+                                  <p>
+                                    <label>
+                                      <Checkbox
+                                        name={'notsure'}
+                                        checked={nextTrip === 'not sure'}
+                                        onChange={() => {
+                                          setNextTrip('not sure')
+                                        }}
+                                      />
+                                      &nbsp; Not sure
+                                    </label>
+                                    &nbsp;&nbsp;
+                                  </p>
+                                </div>
+                              </div>
+                              <p className="question">
+                                Are you usually the organiser of the trip or participant/non-organiser?
+                              </p>
+                              <div>
+                                <div>
+                                  <p>
+                                    <label>
+                                      <Checkbox
+                                        name={'plannerType'}
+                                        checked={plannerType === 'organiser'}
+                                        onChange={() => {
+                                          setPlannerType('organiser');
+                                        }}
+                                      />
+                                      &nbsp; Organiser
+                                    </label>
+                                    &nbsp;&nbsp;
+                                  </p>
+                                </div>
+                                <div>
+                                  <p>
+                                    <label>
+                                      <Checkbox
+                                        name={'plannerType'}
+                                        checked={!plannerType === 'participant'}
+                                        onChange={() => {
+                                          setPlannerType('participant');
+                                        }}
+                                      />
+                                      &nbsp; Participant
                                     </label>
                                     &nbsp;&nbsp;
                                   </p>
@@ -811,7 +1000,7 @@ function App() {
                           ) : formStep === 2 ? (
                             <div>
                               <label style={{ marginBottom: 20 }}>
-                                Out of the three places, which is your
+                                Out of the two places, which is your
                                 <span className="bold600"> favourite?</span>
                               </label>
                               <div>
@@ -845,7 +1034,7 @@ function App() {
                                     &nbsp;&nbsp;
                                   </p>
                                 </div>
-                                <div>
+                                {/* <div>
                                   <p>
                                     <label>
                                       <Checkbox
@@ -859,7 +1048,7 @@ function App() {
                                     </label>
                                     &nbsp;&nbsp;
                                   </p>
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           ) : (
@@ -872,7 +1061,7 @@ function App() {
                               </p>
                               <p style={{ marginBottom: 20 }}>
                                 We would love for you to list your{' '}
-                                <span className="bold600">top 2/3</span> all
+                                <span className="bold600">top 2</span> all
                                 time favourite weekend away destinations (or
                                 even particular accommodations) that you have
                                 recently gone to, not too far from the city you
@@ -911,16 +1100,17 @@ function App() {
                                 (Or where have you been recently and had a great
                                 experience)
                               </label>
+                              <p style={{ marginBottom: 10 }}>Favorite destination 1</p>
                               <div
                                 class="form-group row align-items-center"
                                 style={{ justifyContent: 'space-between' }}
                               >
                                 <input
-                                  style={{ width: '25%' }}
+                                  style={{ width: '45%' }}
                                   type="text"
                                   class="form-control"
-                                  name="place1"
-                                  placeholder="Place"
+                                  name="Accommodation name"
+                                  placeholder="Accommodation name"
                                   required="required"
                                   value={place1.name}
                                   onChange={(e) =>
@@ -931,31 +1121,48 @@ function App() {
                                   }
                                 />
                                 <input
-                                  style={{ width: '70%' }}
+                                  style={{ width: '50%' }}
                                   type="text"
                                   class="form-control"
                                   name="place1"
-                                  placeholder="Why do you like it?"
+                                  placeholder="Location"
                                   required="required"
-                                  value={place1.reason}
+                                  value={place1.location}
                                   onChange={(e) =>
                                     setPlace1({
                                       ...place1,
-                                      reason: e.target.value,
+                                      location: e.target.value,
                                     })
                                   }
                                 />
                               </div>
+                              <div class="form-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="place1"
+                                    placeholder="Why do you like it?"
+                                    required="required"
+                                    value={place1.reason}
+                                    onChange={(e) =>
+                                      setPlace1({
+                                        ...place1,
+                                        reason: e.target.value,
+                                      })
+                                    }
+                                  />
+                              </div>
+                              <p style={{ marginBottom: 10 }}>Favorite destination 2</p>
                               <div
                                 class="form-group row align-items-center"
                                 style={{ justifyContent: 'space-between' }}
                               >
                                 <input
-                                  style={{ width: '25%' }}
+                                  style={{ width: '45%' }}
                                   type="text"
                                   class="form-control"
                                   name="place2"
-                                  placeholder="Place"
+                                  placeholder="Accommodation name"
                                   required="required"
                                   value={place2.name}
                                   onChange={(e) =>
@@ -966,22 +1173,38 @@ function App() {
                                   }
                                 />
                                 <input
-                                  style={{ width: '70%' }}
+                                  style={{ width: '50%' }}
                                   type="text"
                                   class="form-control"
                                   name="place2"
-                                  placeholder="Why do you like it?"
+                                  placeholder="Location"
                                   required="required"
-                                  value={place2.reason}
+                                  value={place2.location}
                                   onChange={(e) =>
                                     setPlace2({
                                       ...place2,
-                                      reason: e.target.value,
+                                      location: e.target.value,
                                     })
                                   }
                                 />
                               </div>
-                              <div
+                              <div class="form-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="place2"
+                                    placeholder="Why do you like it?"
+                                    required="required"
+                                    value={place2.reason}
+                                    onChange={(e) =>
+                                      setPlace2({
+                                        ...place2,
+                                        reason: e.target.value,
+                                      })
+                                    }
+                                  />
+                              </div>
+                              {/* <div
                                 class="form-group row align-items-center"
                                 style={{ justifyContent: 'space-between' }}
                               >
@@ -1015,7 +1238,7 @@ function App() {
                                     })
                                   }
                                 />
-                              </div>
+                              </div> */}
                             </>
                           )}
                         </div>
@@ -1035,7 +1258,9 @@ function App() {
                                   ? setFormStep(1)
                                   : formStep === 3
                                   ? setFormStep(2)
-                                  : setFormStep(3);
+                                  : formStep === 4 
+                                  ? setFormStep(3) 
+                                  : setFormStep(4);
                               }}
                             >
                               Back
@@ -1060,7 +1285,16 @@ function App() {
                                 ? setFormStep(3)
                                 : formStep === 3
                                 ? setFormStep(4)
-                                : submit(e);
+                                : formStep === 4 
+                                ? submit(e)
+                                : formStep === 5 
+                                && navigator.share && navigator.share({
+                                  text: 'Hi, I came accross this amazing site that understood the type of traveller I am! Try it yourself',
+                                  url: 'our url',
+                                  title: 'Explore Africa'
+                                }).then(res => {
+                                  console.log("res====>", res);
+                                })
                             }}
                             type="submit"
                             class="btn btn-lg btn-block mt-3"
@@ -1070,8 +1304,10 @@ function App() {
                               : formStep === 1 ||
                                 formStep === 2 ||
                                 formStep === 3
-                              ? 'Next'
-                              : "Let's explore!"}
+                                ? 'Next'
+                              : formStep === 4 
+                              ? "Let's explore!" 
+                              : 'Click here to share'}
                           </button>
                         </div>
                       </div>
