@@ -116,7 +116,7 @@ body {
 }
 
 .headerTxt {
-  font-size: 120px;
+  font-size: 80px;
 }
 
 @media (max-width: 991px) {
@@ -394,6 +394,7 @@ img {
 
 .question {
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .section-heading > h2::after {
@@ -634,6 +635,14 @@ img {
     margin-right: 0px !important;
     margin-bottom: 20px;
   }
+  .travellerImg img {
+    min-height: 400px;
+  }
+
+  .col-12 {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
 }
 
 .store-buttons.store-black img {
@@ -823,8 +832,9 @@ img {
 
 /*BACKGROUND IMAGES*/
 .welcome-area {
-  background: rgba(0, 0, 0, 0) url('../img/bg/bg55.jpg') no-repeat scroll center
-    center/cover;
+  background: rgba(0, 0, 0, 0)
+    url('https://res.cloudinary.com/alvomugz/image/upload/v1697686951/bg55_gs4dsp.jpg')
+    no-repeat scroll center center/cover;
   clip-path: polygon(0 0, 100% 0, 100% 90%, 75% 100%, 34% 94%, 0 100%);
 }
 

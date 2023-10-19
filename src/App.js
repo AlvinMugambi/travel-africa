@@ -47,6 +47,68 @@ function App() {
       );
   };
 
+  async function createFile(url, type){
+    if (typeof window === 'undefined') return // make sure we are in the browser
+    const response = await fetch(url)
+    const data = await response.blob()
+    const metadata = {
+      name: 'file1',
+      type: type || 'image/png'
+    }
+    return new File([data], url, metadata)
+  }
+
+//   const files = useMemo(() => {
+//     const promises = getTravelorType(reasons)?.map((imageUrl) => {
+//       return createFile(imageUrl).then(function(results){
+//         return results 
+//       })
+//     Promise.all(promises).then(function(results) {
+//         console.log("results====>", results)
+//     })
+//   })
+// }, [])
+
+  // console.log("data====>", getTravelorType(reasons)?.map(imageUrl => {
+  //   const file = await createFile(imageUrl)
+  //   return  file
+  // }));
+
+  const handleShare = async () => {
+    setCopiedLink(false);
+    const text =
+      'Hi, I came across this amazing new site that understood the type of traveller I am! Try it yourself';
+    // const blob = await fetch('https://res.cloudinary.com/alvomugz/image/upload/v1697699693/More_than_4_ostjd4.png').then(r=>r.blob())
+    // const files = [
+    //   new File([blob], 'file.png', {
+    //     type: blob.type,
+    //   }),
+    // ]
+    // console.log("files====>", files);
+    if (navigator.share) {
+    navigator
+      .share({
+        text,
+        url: window.location.href,
+        title: 'Explore Africa',
+        // files: files
+      })
+      .then(() => console.log('Shared successfully'))
+      .catch((error) => console.error('Error sharing:', error));
+    } else {
+      console.log('Web Share API not supported on this browser');
+      navigator.clipboard
+        .writeText(text + '. Here is the URL: ' + window.location.href)
+        .then(() => {
+          setCopiedLink(true);
+          setTimeout(() => {
+            setCopiedLink(false);
+          }, 2000);
+        })
+        .catch((error) => console.error('Error copying:', error));
+    }
+  };
+
   const submit = (e) => {
     e.preventDefault();
     setMessage('');
@@ -59,7 +121,7 @@ function App() {
     setLoading(true);
     axios
       .post('https://nairobiservices.go.ke/api/authentication/auth/travel', {
-      // .post('http://127.0.0.1:8001/auth/travel', {
+        // .post('http://127.0.0.1:8001/auth/travel', {
         name,
         email,
         dataRequest,
@@ -77,7 +139,7 @@ function App() {
         sharedList,
         reasons,
         plannerType,
-        nextTrip
+        nextTrip,
       })
       .then((res) => {
         setLoading(false);
@@ -91,8 +153,6 @@ function App() {
         }
       });
   };
-
-
 
   return (
     <div className="App">
@@ -158,11 +218,11 @@ function App() {
               {/* <div class="col-12 col-md-7"> */}
               <div class="welcome-intro intro-layout">
                 <h1 class="text-white headerTxt animated-headerTxt">
-                  EXPLORE AFRICA
+                  PLAN A TRIP WITH YOUR FRIENDS
                 </h1>
                 <p class="text-white my-4 animated-headerTxt text text-center">
-                  Personal recommendations & easy planning for your next
-                  getaway, what more could you need?
+                  Easy trip planning and collaboration for groups on one
+                  consolidated platform, what more could you need?
                 </p>
                 <div className="explore-btn ripple-btn btn-animated">
                   <a
@@ -189,16 +249,16 @@ function App() {
                 </div>
               </div>
             </div>
-            <div class="row align-items-center">
+            {/* <div class="row align-items-center">
               <div style={{ marginBottom: 20 }}>
-                <p className="text-center ptb_50 font20">
+                <p className="ptb_50 font20">
                   We want to create a personal, fun & collaborative platform for
                   users to plan trips with friends, create recommended mapped
                   out experiences, in and around the city they live in, and have
                   their people be a part of the journey with them.
                 </p>
               </div>
-              {/* <div className='info-section reverse'>
+              <div className='info-section reverse'>
                     <div className='info-img'>
                       <img src={require('./assets/img/bg/itenarary.jpg')} style={{height: 350, borderRadius: 10}} />
                     </div>
@@ -206,8 +266,8 @@ function App() {
                       <h3>Customize itinerary</h3>
                       <p style={{paddingTop: 10}}>By customizing your itenarary, you can create a personalized travel plan that aligns with your preference, allowing you to make the most of your trip and have a memorable experience</p>
                     </div>
-                  </div> */}
-            </div>
+                  </div>
+            </div> */}
             <div class="row align-items-center">
               <div className="info-section">
                 <div className="info-txt">
@@ -284,7 +344,7 @@ function App() {
                       ? 'Now, pick your best'
                       : formStep === 3
                       ? 'Tell us a bit more'
-                      : formStep === 4 
+                      : formStep === 4
                       ? 'One last thing!'
                       : 'We found your type!'}
                   </h2>
@@ -299,9 +359,10 @@ function App() {
                   )}
                   {formStep === 4 && (
                     <p class="d-block mt-4">
-                      Please leave your name and email for us to keep in touch
-                      (we PROMISE no spam- only an update if we launch and you
-                      will be the first to know)
+                      To know the type of traveller you are, please leave your
+                      name and email for us to keep in touch (we PROMISE no
+                      spam- only an update if we launch and you will be the
+                      first to know)
                     </p>
                   )}
                   {isSuccessful ? (
@@ -320,7 +381,11 @@ function App() {
             </div>
             <div class="row justify-content-center">
               <div
-                class={formStep === 5 ? "col-md-12 pt-4 pt-md-0" : "col-md-6 pt-4 pt-md-0"}
+                class={
+                  formStep === 5 && reasons.length > 1
+                    ? 'col-md-10 pt-4 pt-md-0'
+                    : 'col-md-6 pt-4 pt-md-0'
+                }
                 style={{ paddingRight: 0, paddingLeft: 0 }}
               >
                 {isSuccessful ? (
@@ -394,20 +459,47 @@ function App() {
                         <div class="col-12">
                           {formStep === 5 ? (
                             <div>
-                              <h3 className='text-center' style={{marginBottom: 10}}>
-                                {capitalizeFLetter(name)}, We found the type of traveller you are
+                              <h3
+                                className="text-center"
+                                style={{ marginBottom: 10 }}
+                              >
+                                {capitalizeFLetter(name)}, we found the type of
+                                traveller you are
                               </h3>
                               <div>
-                                <div style={{display: 'flex', justifyContent: 'center', marginBottom: 10}}>
-                                  {reasons.length === 2 && <h5>You are a mix of</h5>}
-                                  {reasons.length === 3 && <h5>You are a diverse one</h5>}
+                                <div
+                                  style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    marginBottom: 10,
+                                  }}
+                                >
+                                  {reasons.length === 2 && (
+                                    <h5>You are a mix of</h5>
+                                  )}
+                                  {reasons.length === 3 && (
+                                    <h5>You are a diverse one</h5>
+                                  )}
                                 </div>
-                                <div className='flex travelortype'>
-                                  {getTravelorType(reasons)?.map((travelor, index) => (
-                                      <div className='travellerImg' style={{marginRight: index !== reasons.length - 1 ? '20px' : '0px'}} >
-                                        <img src={travelor.image}/>
+                                <div className="flex travelortype">
+                                  {getTravelorType(reasons)?.map(
+                                    (travelor, index) => (
+                                      <div
+                                        className="travellerImg"
+                                        style={{
+                                          marginRight:
+                                            index !== reasons.length - 1
+                                              ? '20px'
+                                              : '0px',
+                                        }}
+                                      >
+                                        <img
+                                          src={travelor.image}
+                                          style={{ borderRadius: 10 }}
+                                        />
                                       </div>
-                                  ))}
+                                    ),
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -470,7 +562,7 @@ function App() {
                               <p className="question">
                                 What do you like the most about{' '}
                                 <span className="bold600">{favourite}</span>?
-                                (select all that apply)
+                                (select your top 2)
                               </p>
                               <div>
                                 <div>
@@ -635,12 +727,20 @@ function App() {
                                     <label>
                                       <Checkbox
                                         name={'relaxed'}
-                                        checked={reasons.includes('relaxed environment')}
+                                        checked={reasons.includes(
+                                          'relaxed environment',
+                                        )}
                                         onChange={() => {
-                                          if (reasons.includes('relaxed environment')) {
+                                          if (
+                                            reasons.includes(
+                                              'relaxed environment',
+                                            )
+                                          ) {
                                             setReasons((prev) =>
                                               prev.filter(
-                                                (item) => item !== 'relaxed environment',
+                                                (item) =>
+                                                  item !==
+                                                  'relaxed environment',
                                               ),
                                             );
                                           } else {
@@ -718,12 +818,19 @@ function App() {
                                     <label>
                                       <Checkbox
                                         name={'closetothebeach'}
-                                        checked={reasons.includes('close to the beach')}
+                                        checked={reasons.includes(
+                                          'close to the beach',
+                                        )}
                                         onChange={() => {
-                                          if (reasons.includes('close to the beach')) {
+                                          if (
+                                            reasons.includes(
+                                              'close to the beach',
+                                            )
+                                          ) {
                                             setReasons((prev) =>
                                               prev.filter(
-                                                (item) => item !== 'close to the beach',
+                                                (item) =>
+                                                  item !== 'close to the beach',
                                               ),
                                             );
                                           } else {
@@ -777,7 +884,7 @@ function App() {
                                         name={'nextweek'}
                                         checked={nextTrip === 'next week'}
                                         onChange={() => {
-                                          setNextTrip('next week')
+                                          setNextTrip('next week');
                                         }}
                                       />
                                       &nbsp; Next week
@@ -792,7 +899,7 @@ function App() {
                                         name={'nextmonth'}
                                         checked={nextTrip === 'next month'}
                                         onChange={() => {
-                                          setNextTrip('next month')
+                                          setNextTrip('next month');
                                         }}
                                       />
                                       &nbsp; Next month
@@ -807,7 +914,7 @@ function App() {
                                         name={'nextyear'}
                                         checked={nextTrip === 'next year'}
                                         onChange={() => {
-                                          setNextTrip('next year')
+                                          setNextTrip('next year');
                                         }}
                                       />
                                       &nbsp; Next year
@@ -822,7 +929,7 @@ function App() {
                                         name={'notsure'}
                                         checked={nextTrip === 'not sure'}
                                         onChange={() => {
-                                          setNextTrip('not sure')
+                                          setNextTrip('not sure');
                                         }}
                                       />
                                       &nbsp; Not sure
@@ -832,7 +939,8 @@ function App() {
                                 </div>
                               </div>
                               <p className="question">
-                                Are you usually the organiser of the trip or participant/non-organiser?
+                                Are you usually the organiser of the trip or
+                                participant/non-organiser?
                               </p>
                               <div>
                                 <div>
@@ -855,7 +963,7 @@ function App() {
                                     <label>
                                       <Checkbox
                                         name={'plannerType'}
-                                        checked={!plannerType === 'participant'}
+                                        checked={plannerType === 'participant'}
                                         onChange={() => {
                                           setPlannerType('participant');
                                         }}
@@ -1060,27 +1168,27 @@ function App() {
                                 Nairobi and Cape Town travellers
                               </p>
                               <p style={{ marginBottom: 20 }}>
+                                To know the type of traveller you are we need to
+                                get to know you a bit better…
+                              </p>
+                              <p style={{ marginBottom: 20 }}>
                                 We would love for you to list your{' '}
-                                <span className="bold600">top 2</span> all
-                                time favourite weekend away destinations (or
-                                even particular accommodations) that you have
-                                recently gone to, not too far from the city you
-                                live in, and why you would HIGHLY recommend them
-                                to a friend.
+                                <span className="bold600">top 2</span> all time
+                                favourite weekend away places or 2 places that
+                                you have recently gone to, not too far from the
+                                city you live in, and why you would{' '}
+                                <span className="bold600">HIGHLY</span>{' '}
+                                recommend them to a friend.
                               </p>
                               <label style={{ marginBottom: 10 }}>
-                                In return, based on your listings and
-                                preference, we will email you an ENTIRE list of
-                                places/accommodation recommendations, from
-                                people who have similar interests as you!! The
-                                best part about this is that it will be
-                                recommendations from your friends and friends of
-                                friends- so you know you are in good hands!{' '}
-                                <span className="bold600">
-                                  How cool is that?!?
-                                </span>
+                                In return, we will email you an ENTIRE list of
+                                accommodation recommendations, from people who
+                                are a similar traveller to you!!
                               </label>
-                              <p style={{ marginBottom: 20 }}>
+                              <p
+                                style={{ marginBottom: 20 }}
+                                className="bold600"
+                              >
                                 For this to work, we need to know the type of
                                 traveller you are. Let’s get started.
                               </p>
@@ -1095,12 +1203,18 @@ function App() {
                                   onChange={(e) => setCity(e.target.value)}
                                 />
                               </div>
-                              <label for="" style={{ marginBottom: 10 }}>
+                              <label
+                                for=""
+                                className="bold600"
+                                style={{ marginBottom: 10 }}
+                              >
                                 Where do you like to go away for the weekend?
                                 (Or where have you been recently and had a great
                                 experience)
                               </label>
-                              <p style={{ marginBottom: 10 }}>Favorite destination 1</p>
+                              <p style={{ marginBottom: 10 }}>
+                                Favorite destination 1
+                              </p>
                               <div
                                 class="form-group row align-items-center"
                                 style={{ justifyContent: 'space-between' }}
@@ -1138,21 +1252,23 @@ function App() {
                               </div>
                               <div class="form-group">
                                 <input
-                                    type="text"
-                                    class="form-control"
-                                    name="place1"
-                                    placeholder="Why do you like it?"
-                                    required="required"
-                                    value={place1.reason}
-                                    onChange={(e) =>
-                                      setPlace1({
-                                        ...place1,
-                                        reason: e.target.value,
-                                      })
-                                    }
-                                  />
+                                  type="text"
+                                  class="form-control"
+                                  name="place1"
+                                  placeholder="Why do you like it?"
+                                  required="required"
+                                  value={place1.reason}
+                                  onChange={(e) =>
+                                    setPlace1({
+                                      ...place1,
+                                      reason: e.target.value,
+                                    })
+                                  }
+                                />
                               </div>
-                              <p style={{ marginBottom: 10 }}>Favorite destination 2</p>
+                              <p style={{ marginBottom: 10 }}>
+                                Favorite destination 2
+                              </p>
                               <div
                                 class="form-group row align-items-center"
                                 style={{ justifyContent: 'space-between' }}
@@ -1190,19 +1306,19 @@ function App() {
                               </div>
                               <div class="form-group">
                                 <input
-                                    type="text"
-                                    class="form-control"
-                                    name="place2"
-                                    placeholder="Why do you like it?"
-                                    required="required"
-                                    value={place2.reason}
-                                    onChange={(e) =>
-                                      setPlace2({
-                                        ...place2,
-                                        reason: e.target.value,
-                                      })
-                                    }
-                                  />
+                                  type="text"
+                                  class="form-control"
+                                  name="place2"
+                                  placeholder="Why do you like it?"
+                                  required="required"
+                                  value={place2.reason}
+                                  onChange={(e) =>
+                                    setPlace2({
+                                      ...place2,
+                                      reason: e.target.value,
+                                    })
+                                  }
+                                />
                               </div>
                               {/* <div
                                 class="form-group row align-items-center"
@@ -1243,6 +1359,26 @@ function App() {
                           )}
                         </div>
                         <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            width: '100%',
+                          }}
+                        >
+                          {copiedLink && (
+                            <p
+                              style={{
+                                color: 'green',
+                                marginTop: 10,
+                                marginRight: 20,
+                              }}
+                            >
+                              Link copied!
+                            </p>
+                          )}
+                        </div>
+
+                        <div
                           class="col-12 flex row justify-space-between"
                           style={{ flexWrap: 'wrap' }}
                         >
@@ -1258,8 +1394,8 @@ function App() {
                                   ? setFormStep(1)
                                   : formStep === 3
                                   ? setFormStep(2)
-                                  : formStep === 4 
-                                  ? setFormStep(3) 
+                                  : formStep === 4
+                                  ? setFormStep(3)
                                   : setFormStep(4);
                               }}
                             >
@@ -1267,7 +1403,14 @@ function App() {
                             </button>
                           )}
                           <button
-                            style={{ width: formStep !== 1 ? '60%' : '100%' }}
+                            style={{
+                              width:
+                                formStep !== 1
+                                  ? '60%'
+                                  : formStep === 4
+                                  ? '70%'
+                                  : '100%',
+                            }}
                             disabled={
                               (formStep === 1 &&
                                 (!place1.name || !place2.name || !city)) ||
@@ -1285,16 +1428,9 @@ function App() {
                                 ? setFormStep(3)
                                 : formStep === 3
                                 ? setFormStep(4)
-                                : formStep === 4 
+                                : formStep === 4
                                 ? submit(e)
-                                : formStep === 5 
-                                && navigator.share && navigator.share({
-                                  text: 'Hi, I came accross this amazing site that understood the type of traveller I am! Try it yourself',
-                                  url: 'our url',
-                                  title: 'Explore Africa'
-                                }).then(res => {
-                                  console.log("res====>", res);
-                                })
+                                : formStep === 5 && handleShare();
                             }}
                             type="submit"
                             class="btn btn-lg btn-block mt-3"
@@ -1304,9 +1440,9 @@ function App() {
                               : formStep === 1 ||
                                 formStep === 2 ||
                                 formStep === 3
-                                ? 'Next'
-                              : formStep === 4 
-                              ? "Let's explore!" 
+                              ? 'Next'
+                              : formStep === 4
+                              ? 'Find out your traveller type!'
                               : 'Click here to share'}
                           </button>
                         </div>
@@ -1339,10 +1475,10 @@ function App() {
                         <a href="#">Home</a>
                       </li>
                       <li class="py-2">
-                        <a href="#">About Us</a>
+                        <a href="#features">About Us</a>
                       </li>
                       <li class="py-2">
-                        <a href="#">join Wishlist</a>
+                        <a href="#contact">join Wishlist</a>
                       </li>
                     </ul>
                   </div>
