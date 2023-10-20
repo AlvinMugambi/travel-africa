@@ -47,51 +47,29 @@ function App() {
       );
   };
 
-  async function createFile(url, type){
-    if (typeof window === 'undefined') return // make sure we are in the browser
-    const response = await fetch(url)
-    const data = await response.blob()
-    const metadata = {
-      name: 'file1',
-      type: type || 'image/png'
-    }
-    return new File([data], url, metadata)
-  }
+  const urlToObject = async (url) => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const file = new File([blob], 'image.png', { type: blob.type });
+    return file;
+  };
 
-//   const files = useMemo(() => {
-//     const promises = getTravelorType(reasons)?.map((imageUrl) => {
-//       return createFile(imageUrl).then(function(results){
-//         return results 
-//       })
-//     Promise.all(promises).then(function(results) {
-//         console.log("results====>", results)
-//     })
-//   })
-// }, [])
-
-  // console.log("data====>", getTravelorType(reasons)?.map(imageUrl => {
-  //   const file = await createFile(imageUrl)
-  //   return  file
-  // }));
+  const travellerType = useMemo(() => getTravelorType(reasons)?.type || '', [reasons])
 
   const handleShare = async () => {
     setCopiedLink(false);
     const text =
-      'Hi, I came across this amazing new site that understood the type of traveller I am! Try it yourself';
-    // const blob = await fetch('https://res.cloudinary.com/alvomugz/image/upload/v1697699693/More_than_4_ostjd4.png').then(r=>r.blob())
-    // const files = [
-    //   new File([blob], 'file.png', {
-    //     type: blob.type,
-    //   }),
-    // ]
-    // console.log("files====>", files);
+      `Hi, I came across this amazing new site that understood the type of traveller I am! I just found out that I am ${travellerType}. Try it yourself!`;
+
+    const filesGetter = getTravelorType(reasons)?.images?.map((file) => urlToObject(file.image));
+    const newFiles = await Promise.all(filesGetter);
+
     if (navigator.share) {
     navigator
       .share({
         text,
         url: window.location.href,
-        title: 'Explore Africa',
-        // files: files
+        files: newFiles
       })
       .then(() => console.log('Shared successfully'))
       .catch((error) => console.error('Error sharing:', error));
@@ -109,6 +87,19 @@ function App() {
     }
   };
 
+  const handleStep2 = () => {
+    if(place1.name && place2.name) {
+      setFormStep(2)
+    } else {
+      setFormStep(3)
+      if(place1.name){
+        setFavourite(place1.name)
+      } else if (place2.name) {
+        setFavourite(place2.name)
+      }
+    }
+  }
+ 
   const submit = (e) => {
     e.preventDefault();
     setMessage('');
@@ -140,6 +131,7 @@ function App() {
         reasons,
         plannerType,
         nextTrip,
+        travellerType
       })
       .then((res) => {
         setLoading(false);
@@ -163,7 +155,7 @@ function App() {
         <header class="navbar navbar-sticky navbar-expand-lg navbar-dark">
           <div class="container position-relative">
             <a class="navbar-brand" href="">
-              {/* <img class="navbar-brand-regular" src={require("./assets/img/adililogo.png")} alt="brand-logo" style={{height: '80px', width: 'auto'}} /> */}
+              {/* <img class="navbar-brand-regular" src={require("./assets/img/Logo/logo.png")} alt="brand-logo" style={{height: '80px', width: 'auto'}} /> */}
               {/* <img class="navbar-brand-sticky" src={require("./assets/img/adililogo.png")} alt="sticky brand-logo" style={{height: '80px', width: 'auto'}} /> */}
             </a>
             <button
@@ -184,6 +176,7 @@ function App() {
               >
                 <span class="navbar-toggler-icon"></span>
               </button>
+
               <nav>
                 <ul class="navbar-nav" id="navbar-nav">
                   <li class="nav-item">
@@ -482,7 +475,7 @@ function App() {
                                   )}
                                 </div>
                                 <div className="flex travelortype">
-                                  {getTravelorType(reasons)?.map(
+                                  {getTravelorType(reasons)?.images?.map(
                                     (travelor, index) => (
                                       <div
                                         className="travellerImg"
@@ -1172,9 +1165,9 @@ function App() {
                                 get to know you a bit better…
                               </p>
                               <p style={{ marginBottom: 20 }}>
-                                We would love for you to list your{' '}
-                                <span className="bold600">top 2</span> all time
-                                favourite weekend away places or 2 places that
+                                We would love for you to list your top{' '}
+                                <span className="bold600">ONE or TWO</span> all time
+                                favourite weekend away places or places that
                                 you have recently gone to, not too far from the
                                 city you live in, and why you would{' '}
                                 <span className="bold600">HIGHLY</span>{' '}
@@ -1210,7 +1203,7 @@ function App() {
                               >
                                 Where do you like to go away for the weekend?
                                 (Or where have you been recently and had a great
-                                experience)
+                                experience. List one or two)
                               </label>
                               <p style={{ marginBottom: 10 }}>
                                 Favorite destination 1
@@ -1393,7 +1386,7 @@ function App() {
                                 formStep === 2
                                   ? setFormStep(1)
                                   : formStep === 3
-                                  ? setFormStep(2)
+                                  ? place1.name && place2.name ? setFormStep(2) : setFormStep(1)
                                   : formStep === 4
                                   ? setFormStep(3)
                                   : setFormStep(4);
@@ -1413,7 +1406,7 @@ function App() {
                             }}
                             disabled={
                               (formStep === 1 &&
-                                (!place1.name || !place2.name || !city)) ||
+                                (!place1.name && !place2.name || !city)) ||
                               (formStep === 2 && !favourite) ||
                               (formStep === 3 &&
                                 (!reasons.length ||
@@ -1423,7 +1416,7 @@ function App() {
                             onClick={(e) => {
                               e.preventDefault();
                               formStep === 1
-                                ? setFormStep(2)
+                                ? handleStep2() 
                                 : formStep === 2
                                 ? setFormStep(3)
                                 : formStep === 3
@@ -1498,6 +1491,7 @@ function App() {
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3">
                   <div class="footer-items">
+                  <img class="navbar-brand-regular" src={require("./assets/img/Logo/logo.png")} alt="brand-logo" style={{height: '60px', width: 'auto'}} />
                     <h3 class="footer-title mb-2">Soon available on</h3>
                     <div class="button-group store-buttons store-black d-flex flex-wrap">
                       <a href="#">

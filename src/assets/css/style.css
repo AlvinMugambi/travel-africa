@@ -636,7 +636,7 @@ img {
     margin-bottom: 20px;
   }
   .travellerImg img {
-    min-height: 400px;
+    min-height: 350px;
   }
 
   .col-12 {
@@ -1949,7 +1949,7 @@ img {
 ****************************** */
 .height-emulator {
   float: left;
-  height: 300px;
+  height: 400px;
 }
 
 .footer-area .footer-items .social-icons > a {
